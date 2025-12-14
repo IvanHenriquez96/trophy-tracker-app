@@ -8,4 +8,13 @@ const rawgApi = axios.create({
   },
 });
 
-export default rawgApi;
+const searchGame = (query: string) => {
+  try {
+    return rawgApi.get(`/games?search=${query}&page_size=5`);
+  } catch (error) {
+    console.log("error searching game", error);
+    throw error;
+  }
+};
+
+export { searchGame };

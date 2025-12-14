@@ -1,21 +1,19 @@
 import React from "react";
-import { View } from "react-native";
+import { FlatList, View } from "react-native";
 import { Searchbar, Text } from "react-native-paper";
-import rawgApi from "../api";
+import useSearchGameQuery from "../hooks/searchGameQuery";
+import CardGameSearch from "../components/CardGameSearch";
 
 const HomeScreen = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
+  const [gameName, setGameName] = React.useState("");
+
+  const { data, isLoading, error } = useSearchGameQuery(gameName);
 
   const handleSearchGame = async (query: string) => {
-    console.log("query", query);
-    try {
-      //use axios to search for the game
-      const response = await rawgApi.get(`/games?search=${query}&page_size=5`);
-      console.log("response", response.data);
-    } catch (error) {
-      console.error("Error searching game:", error);
-    }
+    setGameName(query);
   };
+
   return (
     <View>
       <Text>Busca tu siguiente trofeo</Text>
@@ -25,6 +23,16 @@ const HomeScreen = () => {
         onSubmitEditing={(e) => handleSearchGame(e.nativeEvent.text)}
         value={searchQuery}
       />
+      {data &&
+        data.map((item: any) => {
+          return (
+            <CardGameSearch
+              key={item.id}
+              name={item.name}
+              cover={item.background_image}
+            />
+          );
+        })}
     </View>
   );
 };
