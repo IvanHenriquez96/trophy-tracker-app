@@ -1,5 +1,7 @@
 import React from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, View, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 import { Searchbar, Text } from "react-native-paper";
 import useSearchGameQuery from "../hooks/searchGameQuery";
 import CardGameSearch from "../components/CardGameSearch";
@@ -15,13 +17,14 @@ const HomeScreen = () => {
   };
 
   return (
-    <View>
-      <Text>Busca tu siguiente trofeo</Text>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>Busca tu siguiente trofeo</Text>
       <Searchbar
         placeholder="Search"
         onChangeText={setSearchQuery}
         onSubmitEditing={(e) => handleSearchGame(e.nativeEvent.text)}
         value={searchQuery}
+        style={styles.searchbar}
       />
       {data &&
         data.map((item: any) => {
@@ -33,8 +36,23 @@ const HomeScreen = () => {
             />
           );
         })}
-    </View>
+    </SafeAreaView>
   );
 };
 
 export default HomeScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  searchbar: {
+    marginBottom: 10,
+  },
+});
