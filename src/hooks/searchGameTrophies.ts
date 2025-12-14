@@ -6,7 +6,6 @@ const useSearchGameTrophiesQuery = (gameId: string) => {
     queryKey: ["game-trophies", gameId],
     queryFn: async () => {
       const res = await searchGameTrophies(gameId);
-      console.log("res", res);
       return res.data.results;
     },
     enabled: gameId !== "",
