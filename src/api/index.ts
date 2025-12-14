@@ -17,4 +17,13 @@ const searchGame = (query: string) => {
   }
 };
 
+const getAchievements = (gameId: string) => {
+  try {
+    https: return rawgApi.get(`/games/${gameId}/achievements`);
+  } catch (error) {
+    console.log("error getting achievements", error);
+    throw error;
+  }
+};
+
 export { searchGame };
