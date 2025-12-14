@@ -4,9 +4,11 @@ import { Modal, Portal, Text, Button, PaperProvider } from "react-native-paper";
 const AddGameModal = ({
   open,
   onDismiss,
+  selectedGame,
 }: {
   open: boolean;
   onDismiss: () => void;
+  selectedGame: any;
 }) => {
   const containerStyle = {
     backgroundColor: "white",
@@ -21,9 +23,27 @@ const AddGameModal = ({
       onDismiss={onDismiss}
       contentContainerStyle={containerStyle}
     >
-      <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center" }}>
-        Comenzar Platino
+      <Text
+        style={{
+          fontSize: 20,
+          fontWeight: "bold",
+          textAlign: "center",
+        }}
+      >
+        ¿Sale Platino?
       </Text>
+      <Text
+        style={{
+          fontSize: 16,
+          textAlign: "center",
+          marginBlock: 20,
+        }}
+      >
+        ¿Quieres comenzar a jugar {selectedGame?.name}?
+      </Text>
+      <Button mode="contained" onPress={onDismiss}>
+        Comenzar
+      </Button>
     </Modal>
   );
 };

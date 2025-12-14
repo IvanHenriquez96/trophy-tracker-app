@@ -16,6 +16,7 @@ const HomeScreen = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [gameName, setGameName] = React.useState("");
   const [openModal, setOpenModal] = React.useState(false);
+  const [selectedGame, setSelectedGame] = React.useState(null);
 
   const { data, isFetching, error } = useSearchGameQuery(gameName);
 
@@ -44,12 +45,19 @@ const HomeScreen = () => {
               key={item.id}
               name={item.name}
               cover={item.background_image}
-              onPress={() => setOpenModal(true)}
+              onPress={() => {
+                setSelectedGame(item);
+                setOpenModal(true);
+              }}
             />
           );
         })}
 
-      <AddGameModal open={openModal} onDismiss={() => setOpenModal(false)} />
+      <AddGameModal
+        open={openModal}
+        onDismiss={() => setOpenModal(false)}
+        selectedGame={selectedGame}
+      />
     </SafeAreaView>
   );
 };
