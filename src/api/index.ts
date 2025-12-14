@@ -17,7 +17,7 @@ const searchGame = (query: string) => {
   }
 };
 
-const getAchievements = (gameId: string) => {
+const searchGameTrophies = (gameId: string) => {
   try {
     return rawgApi.get(`/games/${gameId}/achievements`);
   } catch (error) {
@@ -26,4 +26,4 @@ const getAchievements = (gameId: string) => {
   }
 };
 
-export { searchGame };
+export { searchGame, searchGameTrophies };

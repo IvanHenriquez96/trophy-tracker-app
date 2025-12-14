@@ -9,6 +9,8 @@ const useSearchGameQuery = (name: string) => {
       return res.data.results;
     },
     enabled: name !== "",
+    refetchOnWindowFocus: false,
+    staleTime: 60 * 1000,
   });
 
   return searchGameQuery;
