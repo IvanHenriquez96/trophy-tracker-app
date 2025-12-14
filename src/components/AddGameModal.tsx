@@ -3,6 +3,7 @@ import { Modal, Portal, Text, Button, PaperProvider } from "react-native-paper";
 import useSearchGameTrophiesQuery from "../hooks/searchGameTrophies";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
+import { useQueryClient } from "@tanstack/react-query";
 
 const AddGameModal = ({
   open,
@@ -13,13 +14,11 @@ const AddGameModal = ({
   onDismiss: () => void;
   selectedGame: any;
 }) => {
-  const { data, isFetching, error } = useSearchGameTrophiesQuery(
+  const queryClient = useQueryClient();
+  const { data, isLoading, error } = useSearchGameTrophiesQuery(
     selectedGame?.id
   );
   const handleAddGame = async () => {
-    console.log("el id del juego es", selectedGame?.id);
-    console.log("los trofeos son", data);
-
     try {
       const docRef = await addDoc(collection(db, "myGames"), {
         gameId: selectedGame?.id,
@@ -31,7 +30,7 @@ const AddGameModal = ({
           cleared: false,
         })),
       });
-      console.log("Document written with ID: ", docRef.id);
+      queryClient.invalidateQueries({ queryKey: ["myGames"] });
       onDismiss();
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -69,7 +68,7 @@ const AddGameModal = ({
         ¿Quieres comenzar a jugar {selectedGame?.name}?
       </Text>
       <Button mode="contained" onPress={handleAddGame}>
-        Comenzar
+        {isLoading ? "Cargando..." : "Comenzar"}
       </Button>
     </Modal>
   );
