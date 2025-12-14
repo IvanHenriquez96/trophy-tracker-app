@@ -2,7 +2,12 @@ import React from "react";
 import { FlatList, View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { Searchbar, Text } from "react-native-paper";
+import {
+  ActivityIndicator,
+  MD2Colors,
+  Searchbar,
+  Text,
+} from "react-native-paper";
 import useSearchGameQuery from "../hooks/searchGameQuery";
 import CardGameSearch from "../components/CardGameSearch";
 
@@ -10,7 +15,7 @@ const HomeScreen = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [gameName, setGameName] = React.useState("");
 
-  const { data, isLoading, error } = useSearchGameQuery(gameName);
+  const { data, isFetching, error } = useSearchGameQuery(gameName);
 
   const handleSearchGame = async (query: string) => {
     setGameName(query);
@@ -26,6 +31,10 @@ const HomeScreen = () => {
         value={searchQuery}
         style={styles.searchbar}
       />
+      {isFetching && (
+        <ActivityIndicator animating={true} color={MD2Colors.red800} />
+      )}
+
       {data &&
         data.map((item: any) => {
           return (
