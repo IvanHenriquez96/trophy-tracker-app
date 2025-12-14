@@ -10,10 +10,12 @@ import {
 } from "react-native-paper";
 import useSearchGameQuery from "../hooks/searchGameQuery";
 import CardGameSearch from "../components/CardGameSearch";
+import AddGameModal from "../components/AddGameModal";
 
 const HomeScreen = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [gameName, setGameName] = React.useState("");
+  const [openModal, setOpenModal] = React.useState(false);
 
   const { data, isFetching, error } = useSearchGameQuery(gameName);
 
@@ -42,9 +44,12 @@ const HomeScreen = () => {
               key={item.id}
               name={item.name}
               cover={item.background_image}
+              onPress={() => setOpenModal(true)}
             />
           );
         })}
+
+      <AddGameModal open={openModal} onDismiss={() => setOpenModal(false)} />
     </SafeAreaView>
   );
 };

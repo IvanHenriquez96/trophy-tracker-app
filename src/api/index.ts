@@ -10,7 +10,7 @@ const rawgApi = axios.create({
 
 const searchGame = (query: string) => {
   try {
-    return rawgApi.get(`/games?search=${query}&page_size=5`);
+    return rawgApi.get(`/games?page_size=5&parent_platforms=2&search=${query}`);
   } catch (error) {
     console.log("error searching game", error);
     throw error;
@@ -19,7 +19,7 @@ const searchGame = (query: string) => {
 
 const getAchievements = (gameId: string) => {
   try {
-    https: return rawgApi.get(`/games/${gameId}/achievements`);
+    return rawgApi.get(`/games/${gameId}/achievements`);
   } catch (error) {
     console.log("error getting achievements", error);
     throw error;
